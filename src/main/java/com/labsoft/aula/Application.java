@@ -8,8 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.labsoft.aula.domain.Categoria;
+import com.labsoft.aula.domain.Cidade;
+import com.labsoft.aula.domain.Estado;
 import com.labsoft.aula.domain.Produto;
 import com.labsoft.aula.repositories.CategoriaRepository;
+import com.labsoft.aula.repositories.CidadeRepository;
+import com.labsoft.aula.repositories.EstadoRepository;
 import com.labsoft.aula.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -19,6 +23,10 @@ public class Application implements CommandLineRunner {
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
+	@Autowired
+	private CidadeRepository cidadeRepository;
 	
 	
 	
@@ -47,6 +55,15 @@ public class Application implements CommandLineRunner {
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));	
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
+		Estado est1 = new Estado(null,"Ceará");
+		Estado est2 = new Estado(null,"São Paulo");
+		
+		Cidade c1 = new Cidade(null,"Fortaleza",est1);
+		Cidade c2 = new Cidade(null,"São Paulo", est2);
+		Cidade c3 = new Cidade(null, "Campinas", est2);
+		
+		estadoRepository.saveAll(Arrays.asList(est1,est2));
+		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 	}
 
 }
