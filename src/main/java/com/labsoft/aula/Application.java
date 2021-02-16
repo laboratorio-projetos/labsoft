@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.labsoft.aula.domain.Categoria;
 import com.labsoft.aula.domain.Cidade;
+import com.labsoft.aula.domain.Cliente;
+import com.labsoft.aula.domain.Endereco;
 import com.labsoft.aula.domain.Estado;
 import com.labsoft.aula.domain.Produto;
+import com.labsoft.aula.domain.enums.TipoCliente;
 import com.labsoft.aula.repositories.CategoriaRepository;
 import com.labsoft.aula.repositories.CidadeRepository;
+import com.labsoft.aula.repositories.ClienteRepository;
+import com.labsoft.aula.repositories.EnderecoRepository;
 import com.labsoft.aula.repositories.EstadoRepository;
 import com.labsoft.aula.repositories.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class Application implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	
 	
@@ -64,6 +73,19 @@ public class Application implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		Cliente cli1 = new Cliente(null,"Maria Silva", "maria@gmail.com","36378912377",TipoCliente.PESSOAFISICA);
+		
+		cli1.getTelefones().addAll(Arrays.asList("27363323","93838393"));
+		
+		Endereco e1 = new Endereco(null,"Rua Flores","300","Apto 203","Jardim","62900000",cli1,c1);
+		Endereco e2 = new Endereco(null,"Avenida Matos","105","Sala 800","Centro","60800000",cli1,c1);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 	}
 
 }
